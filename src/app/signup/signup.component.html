@@ -1,0 +1,114 @@
+<div class="col-md-6 offset-md-3 mt-5">
+  <div class="card">
+    <div class="card-body">
+      <h3>Signup Form</h3>
+      <form [formGroup]="signupForm" (ngSubmit)="signup()">
+        <div class="form-group">
+          <label>
+            Name:
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              required
+            />
+          </label>
+          <div
+            *ngIf="name.invalid && (name.dirty || name.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="name.errors.required">
+              Name is required.
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Email:
+            <input
+              type="email"
+              class="form-control"
+              formControlName="email"
+              required
+            />
+          </label>
+          <div
+            *ngIf="email.invalid && (email.dirty || email.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="email.errors.required">
+              Email is required.
+            </div>
+            <div *ngIf="email.errors.email">
+              Email must be valid
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Password:
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+              required
+            />
+          </label>
+          <div
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="password.errors.required">
+              Password is required.
+            </div>
+            <div *ngIf="password.errors.minlength">
+              Password must be at least 4 characters long.
+            </div>
+          </div>
+        </div>
+
+        <div formArrayName="aliases">
+          <div class="form-group">
+            <h3>Nick Names</h3>
+            <button class="btn btn-success" (click)="addAliases()">
+              Add Nickname
+            </button>
+          </div>
+          <div
+            class="form-group"
+            *ngFor="let a of aliases.controls; let i = index"
+          >
+            <label>
+              Nickname:
+              <input class="form-control" type="text" [formControlName]="i" />
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button
+            class="btn btn-primary"
+            [disabled]="!signupForm.valid"
+            type="submit"
+          >
+            Submit
+          </button>
+          <button
+            class="btn btn-primary ml-5"
+            type="button"
+            (click)="navigateToLogin()"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <pre>
+      {{ signupForm.value | json }}
+    </pre
+  >
+  <h2>Form Status : {{ signupForm.status }}</h2>
+</div>
